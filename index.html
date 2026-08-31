@@ -168,6 +168,34 @@
         #cart-items { flex-grow: 1; overflow-y: auto; margin-top: 15px; }
         .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px;}
         .cart-total { font-size: 20px; font-weight: bold; text-align: right; margin-top: 20px; }
+
+        /* 手機版專屬排版優化 */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                padding: 10px;
+            }
+            header h1 {
+                margin-bottom: 15px;
+                font-size: 22px;
+            }
+            nav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            nav a {
+                margin-left: 0;
+                font-size: 15px;
+            }
+            .cart-icon {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+        
     </style>
 </head>
 <body>
