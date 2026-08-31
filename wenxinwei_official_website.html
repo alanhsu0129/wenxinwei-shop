@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文欣維公司 - 官方購物網站</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #27ae60;
+            --bg-color: #f8f9fa;
+        }
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: #333;
+        }
+        /* Navbar */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .cart-icon {
+            background-color: var(--accent-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .hero h2 { font-size: 36px; margin-bottom: 10px; }
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        h2.section-title {
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        /* Products */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            background-color: #eee;
+        }
+        .price {
+            color: var(--accent-color);
+            font-size: 20px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover { background-color: #1a252f; }
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            background-color: var(--accent-color);
+            font-size: 18px;
+        }
+        .submit-btn:hover { background-color: #219653; }
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            line-height: 1.8;
+        }
+        /* Shopping Cart Modal */
+        #cart-modal {
+            display: none;
+            position: fixed;
+            top: 0; right: 0; bottom: 0;
+            width: 350px;
+            background: white;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+            z-index: 200;
+            padding: 20px;
+            flex-direction: column;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .close-cart { cursor: pointer; font-size: 24px; font-weight: bold; }
+        #cart-items { flex-grow: 1; overflow-y: auto; margin-top: 15px; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px;}
+        .cart-total { font-size: 20px; font-weight: bold; text-align: right; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>文欣維公司</h1>
+        <nav>
+            <a href="#products">產品目錄</a>
+            <a href="#contact">聯絡我們</a>
+            <span class="cart-icon" onclick="toggleCart()">🛒 購物車 (<span id="cart-count">0</span>)</span>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h2>歡迎來到文欣維公司</h2>
+        <p>提供您最優質、最可靠的商品與服務</p>
+    </div>
+
+    <div class="container" id="products">
+        <div style="text-align: center;"><h2 class="section-title">精選產品目錄</h2></div>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=300&q=80" alt="產品 A">
+                <h3>商務辦公套組</h3>
+                <p>提升工作效率的最佳選擇</p>
+                <div class="price">NT$ 1,200</div>
+                <button onclick="addToCart('商務辦公套組', 1200)">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=300&q=80" alt="產品 B">
+                <h3>高音質無線耳機</h3>
+                <p>沉浸式的聽覺饗宴</p>
+                <div class="price">NT$ 2,500</div>
+                <button onclick="addToCart('高音質無線耳機', 2500)">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=300&q=80" alt="產品 C">
+                <h3>質感生活攝影機</h3>
+                <p>記錄生活中的美好瞬間</p>
+                <div class="price">NT$ 3,800</div>
+                <button onclick="addToCart('質感生活攝影機', 3800)">加入購物車</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="contact">
+        <div style="text-align: center;"><h2 class="section-title">留下資料 / 詢價</h2></div>
+        <!-- 這裡使用 Formspree 的免費表單服務範例，不用寫後端就能收信 -->
+        <form class="contact-form" action="https://formspree.io/f/your_form_id_here" method="POST" onsubmit="alert('這是一個展示用的表單，設定 Formspree 後即可收到客戶資料！'); event.preventDefault();">
+            <div class="form-group">
+                <label for="name">聯絡人姓名：</label>
+                <input type="text" id="name" name="name" required placeholder="請輸入姓名">
+            </div>
+            <div class="form-group">
+                <label for="phone">聯絡電話：</label>
+                <input type="tel" id="phone" name="phone" required placeholder="例如：0912-345-678">
+            </div>
+            <div class="form-group">
+                <label for="line_id">LINE ID (選填)：</label>
+                <input type="text" id="line_id" name="line_id" placeholder="方便我們用 LINE 與您聯繫">
+            </div>
+            <div class="form-group">
+                <label for="message">需求說明與購物車內容：</label>
+                <textarea id="message" name="message" rows="4" placeholder="請告訴我們您的需求，或結帳時我們會自動將購物車內容填入此處..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">送出資料</button>
+        </form>
+    </div>
+
+    <footer>
+        <h3>文欣維公司</h3>
+        <p>📍 地址：桃園市中壢區</p>
+        <p>📞 電話：03-456-7890</p>
+        <p>💬 LINE 官方客服：<a href="#" style="color:#27ae60; text-decoration:none;">@wenxinwei</a></p>
+        <p>負責人：許和維</p>
+        <p style="font-size: 12px; margin-top:20px; color:#aaa;">&copy; 2026 文欣維公司 版權所有.</p>
+    </footer>
+
+    <!-- 購物車側邊欄 -->
+    <div id="cart-modal">
+        <div class="cart-header">
+            <h3>🛒 您的購物車</h3>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
+        <div id="cart-items">
+            <!-- 購物車內容會動態產生在這裡 -->
+        </div>
+        <div class="cart-total" id="cart-total">總計: NT$ 0</div>
+        <button style="margin-top:20px; background-color:#27ae60;" onclick="checkout()">前往結帳填寫資料</button>
+        <button style="margin-top:10px; background-color:#e74c3c;" onclick="clearCart()">清空購物車</button>
+    </div>
+
+    <script>
+        // 初始化購物車
+        let cart = JSON.parse(localStorage.getItem('wenxinwei_cart')) || [];
+        updateCartDisplay();
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name: name, price: price });
+            localStorage.setItem('wenxinwei_cart', JSON.stringify(cart));
+            updateCartDisplay();
+            
+            // 簡單的視覺回饋
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.backgroundColor = '#e74c3c';
+            setTimeout(() => { cartIcon.style.backgroundColor = '#27ae60'; }, 300);
+            
+            alert(`已將「${name}」加入購物車！`);
+        }
+
+        function clearCart() {
+            cart = [];
+            localStorage.setItem('wenxinwei_cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            document.getElementById('cart-count').innerText = cart.length;
+            
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <span>NT$ ${item.price.toLocaleString()}</span>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('cart-total').innerText = `總計: NT$ ${total.toLocaleString()}`;
+        }
+
+        function checkout() {
+            toggleCart();
+            if (cart.length === 0) {
+                alert('購物車是空的喔！');
+                return;
+            }
+            // 將購物車內容轉化為文字，填入表單的備註中
+            let orderSummary = "【我的購物清單】\n";
+            let total = 0;
+            cart.forEach(item => {
+                orderSummary += `- ${item.name} (NT$ ${item.price})\n`;
+                total += item.price;
+            });
+            orderSummary += `\n總金額：NT$ ${total}\n\n【其他需求說明】：`;
+            
+            document.getElementById('message').value = orderSummary;
+            
+            // 捲動到表單區塊
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
