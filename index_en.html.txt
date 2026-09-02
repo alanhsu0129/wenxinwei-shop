@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wenxinwei Co., Ltd. - Official Store</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #27ae60;
+            --bg-color: #f8f9fa;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: #333; }
+        header { background-color: var(--primary-color); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        header h1 { margin: 0; font-size: 24px; }
+        nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: bold; }
+        .cart-icon { background-color: var(--accent-color); padding: 8px 15px; border-radius: 20px; cursor: pointer; }
+        .hero { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover; color: white; text-align: center; padding: 80px 20px; }
+        .hero h2 { font-size: 36px; margin-bottom: 10px; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        h2.section-title { text-align: center; border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; display: inline-block; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .product-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; transition: transform 0.2s; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; background-color: #eee; }
+        .price { color: var(--accent-color); font-size: 20px; font-weight: bold; margin: 15px 0; }
+        button { background-color: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; }
+        button:hover { background-color: #1a252f; }
+        .contact-form { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .submit-btn { background-color: var(--accent-color); font-size: 18px; }
+        .submit-btn:hover { background-color: #219653; }
+        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 30px 20px; margin-top: 50px; line-height: 1.8; }
+        #cart-modal { display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 350px; background: white; box-shadow: -2px 0 5px rgba(0,0,0,0.2); z-index: 200; padding: 20px; flex-direction: column; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .close-cart { cursor: pointer; font-size: 24px; font-weight: bold; }
+        #cart-items { flex-grow: 1; overflow-y: auto; margin-top: 15px; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px;}
+        .cart-total { font-size: 20px; font-weight: bold; text-align: right; margin-top: 20px; }
+        
+        @media (max-width: 600px) {
+            header { flex-direction: column; padding: 10px; }
+            header h1 { margin-bottom: 15px; font-size: 22px; }
+            nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 15px; }
+            nav a { margin-left: 0; font-size: 15px; }
+            .cart-icon { padding: 6px 12px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Wenxinwei Co., Ltd.</h1>
+        <nav>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact Us</a>
+            <a href="index.html" style="color: #f1c40f;">🌐 中文</a>
+            <span class="cart-icon" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</span>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h2>Welcome to Wenxinwei</h2>
+        <p>Providing the most premium and reliable products & services.</p>
+    </div>
+
+    <div class="container" id="products">
+        <div style="text-align: center;"><h2 class="section-title">Featured Products</h2></div>
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <img src="uv-lamp.jpg.png" alt="Handheld UV Lamp">
+                <h3>Handheld UV Lamp</h3>
+                <p>Model: D9BC-BD405<br>Wavelength: 254/365nm, Tubes: 4Wx2</p>
+                <div class="price">NT$ 12,600</div>
+                <button onclick="addToCart('Handheld UV Lamp (D9BC-BD405)', 12600)">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=300&q=80" alt="Product B">
+                <h3>Hi-Fi Wireless Headphones</h3>
+                <p>Immersive Audio Experience</p>
+                <div class="price">NT$ 2,500</div>
+                <button onclick="addToCart('Hi-Fi Wireless Headphones', 2500)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="contact">
+        <div style="text-align: center;"><h2 class="section-title">Inquiry / Checkout</h2></div>
+        <form class="contact-form" action="https://formspree.io/f/your_form_id_here" method="POST">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required placeholder="Your full name">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required placeholder="e.g. +886-912-345-678">
+            </div>
+            <div class="form-group">
+                <label for="line_id">LINE ID (Optional):</label>
+                <input type="text" id="line_id" name="line_id" placeholder="For easier contact">
+            </div>
+            <div class="form-group">
+                <label for="message">Order Details / Message:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Let us know your requirements, or cart details will auto-fill here upon checkout..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Submit Request</button>
+        </form>
+    </div>
+
+    <footer>
+        <h3>Wenxinwei Co., Ltd.</h3>
+        <p>📍 Add: No. 3, Ln. 129, Fude Rd., Zhongli Dist., Taoyuan City</p>
+        <p>📞 Tel: (03)462-5222, 462-5159</p>
+        <p>📱 Mobile: 0933-253677, 0937-177253</p>
+        <p>📠 Fax: (03)462-5502, 462-5169</p>
+        <p>✉️ Email: hsudavid9889@gmail.com</p>
+        <p>💬 LINE Official: <a href="#" style="color:#27ae60; text-decoration:none;">@0933253677</a></p>
+        <p>📄 VAT Number: 45121872</p>
+        <p>Representative: Hsu Xing-Zhao</p>
+        <p style="font-size: 12px; margin-top:20px; color:#aaa;">&copy; 2026 Wenxinwei Co., Ltd. All Rights Reserved.</p>
+    </footer>
+
+    <div id="cart-modal">
+        <div class="cart-header">
+            <h3>🛒 Your Cart</h3>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
+        <div id="cart-items"></div>
+        <div class="cart-total" id="cart-total">Total: NT$ 0</div>
+        <button style="margin-top:20px; background-color:#27ae60;" onclick="checkout()">Proceed to Checkout</button>
+        <button style="margin-top:10px; background-color:#e74c3c;" onclick="clearCart()">Clear Cart</button>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('wenxinwei_cart_en')) || [];
+        updateCartDisplay();
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        }
+        function addToCart(name, price) {
+            cart.push({ name: name, price: price });
+            localStorage.setItem('wenxinwei_cart_en', JSON.stringify(cart));
+            updateCartDisplay();
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.backgroundColor = '#e74c3c';
+            setTimeout(() => { cartIcon.style.backgroundColor = '#27ae60'; }, 300);
+            alert(`Added "${name}" to cart!`);
+        }
+        function clearCart() {
+            cart = [];
+            localStorage.setItem('wenxinwei_cart_en', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+        function updateCartDisplay() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <span>NT$ ${item.price.toLocaleString()}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('cart-total').innerText = `Total: NT$ ${total.toLocaleString()}`;
+        }
+        function checkout() {
+            toggleCart();
+            if (cart.length === 0) { alert('Your cart is empty!'); return; }
+            let orderSummary = "【My Order List】\n";
+            let total = 0;
+            cart.forEach(item => {
+                orderSummary += `- ${item.name} (NT$ ${item.price})\n`;
+                total += item.price;
+            });
+            orderSummary += `\nTotal Amount: NT$ ${total}\n\n【Additional Requirements】: `;
+            document.getElementById('message').value = orderSummary;
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
